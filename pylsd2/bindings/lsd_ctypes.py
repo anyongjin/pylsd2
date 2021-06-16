@@ -13,21 +13,18 @@ import random
 import numpy as np
 
 
-def load_lsd_library():
-
+def load_library(plat_paths: dict):
     root_dir = os.path.abspath(os.path.dirname(__file__))
 
-    libnames = ['linux/liblsd.so']
     libdir = 'lib'
+    plat_key = 'default'
     if sys.platform == 'win32':
-        if sys.maxsize > 2 ** 32:
-            libnames = ['win32/x64/lsd.dll', 'win32/x64/liblsd.dll']
-        else:
-            libnames = ['win32/x86/lsd.dll', 'win32/x86/liblsd.dll']
+        plat_key = 'x64' if sys.maxsize > 2 ** 32 else 'x86'
     elif sys.platform == 'darwin':
-        libnames = ['darwin/liblsd.dylib']
+        plat_key = 'darwin'
+    libnames = plat_paths.get(plat_key)
 
-    while root_dir != None:
+    while root_dir is not None:
         for libname in libnames:
             try:
                 lsdlib = ctypes.cdll[os.path.join(root_dir, libdir, libname)]
@@ -52,6 +49,21 @@ def load_lsd_library():
 
     return None
 
-lsdlib = load_lsd_library()
-if lsdlib == None:
+
+lsdlib = load_library({
+    'default': ['linux/liblsd.so'],
+    'x86': ['win32/x86/lsd.dll', 'win32/x86/liblsd.dll'],
+    'x64': ['win32/x64/lsd.dll', 'win32/x64/liblsd.dll'],
+    'darwin': ['darwin/liblsd.dylib']
+})
+if lsdlib is None:
     raise ImportError('Cannot load dynamic library. Did you compile LSD?')
+
+edlib = load_library({
+    'default': ['linux/libEDLines.so'],
+    'x86': ['win32/x86/EDLines.dll'],
+    'x64': ['win32/x64/EDLines.dll'],
+    'darwin': []
+})
+if edlib is None:
+    raise ImportError('Cannot load dynamic library. Did you compile EDLines?')

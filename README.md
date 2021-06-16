@@ -3,8 +3,9 @@ pylsd2
 
 ### 1. Introduction
 
-pylsd2 is the python bindings for [LSD - Line Segment Detector](http://www.ipol.im/pub/art/2012/gjmr-lsd/).  
-pylsd2 is forked from [pylsd](https://github.com/primetang/pylsd), and upgrade lsd from 1.5 to 1.6, thanks primetang
+pylsd2 is the python bindings for Line Segment Detection algorithm, including [LSD](http://www.ipol.im/pub/art/2012/gjmr-lsd/) and [EDLines](https://www.sciencedirect.com/science/article/abs/pii/S0167865511001772).  
+* LSD part is forked from [pylsd](https://github.com/primetang/pylsd), and upgrade lsd from 1.5 to 1.6, thanks primetang
+* EDLines part is forked from [line_detector](https://github.com/frotms/line_detector), thanks frotms
 
 Windows and linux is supported currently, merge request for mac is welcome
 
@@ -17,66 +18,73 @@ directly through `pip` to install it:
 
 ### 3. Usage
 
-We can use the package by using `from pylsd2 import LineSegmentDetection`, and `lines = LineSegmentDetection(src)` is the call format for the `LineSegmentDetection` function, where `src` is a Grayscale Image (`H * W` numpy.array), and the return value `lines` is the Detected Line Segment, `lines` is an array of LSDLine instances, the 7-attributes is:
-
-`x1, y1, x2, y2, width, p, log_nfa`
-
-According to these presentations, we can use it just like the following code ([here is the link](https://github.com/anyongjin/pylsd2/tree/master/example)):
-
-* by using cv2 module
-
+* by using cv2 module  
 ```python
 import cv2
-import numpy as np
-import os
-from pylsd2 import LineSegmentDetection
-fullName = 'car.jpg'
-folder, imgName = os.path.split(fullName)
+from pylsd2 import LineSegmentDetection, LineSegmentDetectionED
+fullName, out_path = 'car.jpg', 'car_lsd.jpg'
 src = cv2.imread(fullName, cv2.IMREAD_COLOR)
 gray = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)
-lines = LineSegmentDetection(gray)
+# input single channel image
+lines = LineSegmentDetection(gray)  # [(x1, y1, x2, y2, width, p, log_nfa), ...]
+# lines = LineSegmentDetectionED(gray)  # [(x1, y1, x2, y2), ...]
 for l in lines:
-    pt1 = (int(l.x1), int(l.y1))
-    pt2 = (int(l.x2), int(l.y2))
-    width = l.width
-    cv2.line(src, pt1, pt2, (0, 0, 255), int(np.ceil(width / 2)))
-cv2.imwrite(os.path.join(folder, 'cv2_' + imgName.split('.')[0] + '.jpg'), src)
+    pt1, pt2 = tuple(l[:2]), tuple(l[2:4])
+    cv2.line(src, pt1, pt2, (0, 0, 255), 1)
+cv2.imwrite(out_path, src)
 ```
 
-* by using PIL(Image) module
-
+* by using PIL(Image) module  
 ```python
 from PIL import Image, ImageDraw
 import numpy as np
-import os
-from pylsd2 import LineSegmentDetection
-fullName = 'house.png'
-folder, imgName = os.path.split(fullName)
+from pylsd2 import LineSegmentDetection, LineSegmentDetectionED
+fullName, out_path = 'car.jpg', 'car_edlines.jpg'
 img = Image.open(fullName)
 gray = np.asarray(img.convert('L'))
+# input single channel image
 lines = LineSegmentDetection(gray)
+# lines = LineSegmentDetectionED(gray)
 draw = ImageDraw.Draw(img)
 for l in lines:
-    pt1 = (int(l.x1), int(l.y1))
-    pt2 = (int(l.x2), int(l.y2))
-    width = l.width
-    draw.line((pt1, pt2), fill=(0, 0, 255), width=int(np.ceil(width / 2)))
-img.save(os.path.join(folder, 'PIL_' + imgName.split('.')[0] + '.jpg'))
+    pt1, pt2 = l[:2], l[2:4]
+    draw.line((pt1, pt2), fill=(0, 0, 255), width=1)
+img.save(out_path)
 ```
+
+[more examples](https://github.com/anyongjin/pylsd2/tree/master/example):
+
 
 The following is the result:
 
-* car.jpg by using cv2 module
+* car.jpg Original  
+![](example/car.jpg)
 
-![](https://github.com/anyongjin/pylsd2/blob/master/example/car.jpg)
+* with lsd algorithm  
+![](example/out/car_lsd.jpg)
 
-![](https://github.com/anyongjin/pylsd2/blob/master/example/cv2_car.jpg)
+* with EDLines algorithm  
+![](example/out/car_edlines.jpg)
 
-* house.png by using PIL(Image) module
 
-![](https://github.com/anyongjin/pylsd2/blob/master/example/house.png)
+* house.png Original  
+![](example/house.png)
 
-![](https://github.com/anyongjin/pylsd2/blob/master/example/PIL_house.jpg)
+* with lsd algorithm  
+![](example/out/house_lsd.png)
+
+* with EDLines algorithm  
+![](example/out/house_edlines.png)
+  
+
+* chairs.jpg Original  
+![](example/chairs.jpg)
+
+* with lsd algorithm  
+![](example/out/chairs_lsd.jpg)
+
+* with EDLines algorithm  
+![](example/out/chairs_edlines.jpg)
 
 ### 4. Compile Library from cpp
 ** Windows **  

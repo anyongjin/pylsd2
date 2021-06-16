@@ -1,6 +1,7 @@
-*/build
-*/build_so
-*/CMakeFiles
+**/build
+**/build_so
+source/lsd/build_so
+source/lsd/CMakeFiles
 **/.idea/workspace.xml
 **/.idea/tasks.xml
 .vscode

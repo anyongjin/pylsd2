@@ -5,11 +5,12 @@
 # @Link    : https://github.com/anyongjin/pylsd2
 # @Version : 0.0.1
 from ctypes import *
-from pylsd2.bindings.lsd_ctypes import lsdlib
+from pylsd2.bindings.lsd_ctypes import lsdlib, edlib
 
 
 class LSDLine:
     def __init__(self, line_arr):
+        self.arr = line_arr
         self.x1 = line_arr[0]
         self.y1 = line_arr[1]
         self.x2 = line_arr[2]
@@ -19,7 +20,7 @@ class LSDLine:
         self.log_nfa = line_arr[6]
 
     def __str__(self):
-        return f'({self.x1},{self.y1})->({self.x2},{self.y2}) width:{self.width}, p:{self.p}, nfa:{self.log_nfa}'
+        return f'({self.x1:.3f},{self.y1:.3f})->({self.x2:.3f},{self.y2:.3f}) width:{self.width:.3f}, p:{self.p:.3f}, nfa:{self.log_nfa:.3f}'
 
 
 CLineSegmentDetection = lsdlib.LineSegmentDetection
@@ -76,3 +77,30 @@ CLsd.argtypes = [
 CFree_lines = lsdlib.free_lines
 CFree_lines.restype = None
 CFree_lines.argtypes = [POINTER(c_double)]
+
+'''
+LSD from ED_lib 
+'''
+
+CLineSegmentDetectionED = edlib.EdgeDrawingLineDetectorWrapper
+CLineSegmentDetectionED.restype = POINTER(c_double)
+CLineSegmentDetectionED.argtypes = [
+    POINTER(c_int),  # n_out
+    POINTER(c_ubyte),  # srcImg
+    c_int,  # w
+    c_int,  # h
+    c_float,  # scaleX
+    c_float,  # scaleY
+    c_short,  # gradThres
+    c_short,  # anchorThres
+    c_short,  # scanInterval
+    c_int,  # minLineLen
+    c_float,  # lineFitErrThres
+    c_int,  # gs_kx
+    c_int,  # gs_ky
+    c_float,  # gs_sigma
+]
+
+CFreeLinesED = edlib.free_lines
+CFreeLinesED.restype = None
+CFreeLinesED.argtypes = [POINTER(c_double)]
