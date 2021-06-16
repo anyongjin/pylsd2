@@ -4,14 +4,14 @@
 # @Author  : Gefu Tang (tanggefu@gmail.com)
 # @Update	: anyongjin 2021/06/10
 # @Link    : https://github.com/anyongjin/pylsd2
-# @Version : 0.0.1
+# @Version : 0.0.2
 
 from setuptools import setup
 
 setup(
     name='pylsd2',
-    version='0.0.1',
-    description='pylsd2 is the python bindings for LSD - Line Segment Detector',
+    version='0.0.2',
+    description='pylsd2 is the python bindings for Line Segment Detection(LSD and EDLines)',
     author='Gefu Tang, anyongjin',
     author_email='anyongjin163@163.com',
     license='BSD',
