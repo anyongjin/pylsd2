@@ -10,7 +10,7 @@ from setuptools import setup
 
 setup(
     name='pylsd2',
-    version='0.0.2',
+    version='0.0.3',
     description='pylsd2 is the python bindings for Line Segment Detection(LSD and EDLines)',
     author='Gefu Tang, anyongjin',
     author_email='anyongjin163@163.com',
