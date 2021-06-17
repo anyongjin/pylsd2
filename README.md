@@ -43,8 +43,8 @@ fullName, out_path = 'car.jpg', 'car_edlines.jpg'
 img = Image.open(fullName)
 gray = np.asarray(img.convert('L'))
 # input single channel image
-lines = LineSegmentDetection(gray)
-# lines = LineSegmentDetectionED(gray)
+# lines = LineSegmentDetection(gray)
+lines = LineSegmentDetectionED(gray)
 draw = ImageDraw.Draw(img)
 for l in lines:
     pt1, pt2 = l[:2], l[2:4]

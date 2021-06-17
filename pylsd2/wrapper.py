@@ -4,6 +4,7 @@
 # Author: anyongjin
 # Date  : 2021/6/10
 import ctypes
+import numpy as np
 from pylsd2.bindings.fn_types import *
 
 
@@ -19,13 +20,15 @@ def _get_lines(return_val, n_out, as_int=True):
     line_dim = 7
     line_len = n_out.value
     lines = [return_val[i * line_dim: (i + 1) * line_dim] for i in range(line_len)]
+    dtype = np.float32
     if as_int:
+        dtype = np.int32
         result_lines = []
         for l in lines:
             result_lines.append([round(l[0]), round(l[1]), round(l[2]), round(l[3])] + l[4:])
         lines = result_lines
     CFree_lines(return_val)
-    return lines
+    return np.array(lines, dtype=dtype)
 
 
 def LineSegmentDetection(src, blur_scale=0.8, sigma_scale=0.6, quant=2.0, ang_th=22.5,
@@ -107,13 +110,15 @@ def _get_ed_lines(return_val, n_out, as_int=True):
     line_dim = 4
     line_len = n_out.value
     lines = [return_val[i * line_dim: (i + 1) * line_dim] for i in range(line_len)]
+    dtype = np.float32
     if as_int:
+        dtype = np.int32
         result_lines = []
         for l in lines:
             result_lines.append([round(l[0]), round(l[1]), round(l[2]), round(l[3])] + l[4:])
         lines = result_lines
     CFreeLinesED(return_val)
-    return lines
+    return np.array(lines, dtype=dtype)
 
 
 def LineSegmentDetectionED(img_arr, scaleX=1, scaleY=1, grad_thres=80, anchor_thres=2, scan_interval=2,
