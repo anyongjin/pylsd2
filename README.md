@@ -1,7 +1,7 @@
 pylsd2
 ======
 
-### 1. Introduction
+## 1. Introduction
 
 pylsd2 is the python bindings for Line Segment Detection algorithm, including [LSD](http://www.ipol.im/pub/art/2012/gjmr-lsd/) and [EDLines](https://www.sciencedirect.com/science/article/abs/pii/S0167865511001772).
 
@@ -10,7 +10,7 @@ pylsd2 is the python bindings for Line Segment Detection algorithm, including [L
 
 Windows and linux is supported currently, merge request for mac is welcome
 
-### 2. Install
+## 2. Install
 
 directly through `pip` to install it:
 
@@ -18,7 +18,7 @@ directly through `pip` to install it:
 [sudo] pip install pylsd2
 ```
 
-### 3. Usage
+## 3. Usage
 
 * by using cv2 module
 
@@ -60,20 +60,40 @@ img.save(out_path)
 
 The following is the result:
 
-* car.jpg Original![](example/car.jpg)
-* with lsd algorithm![](example/out/car_lsd.jpg)
-* with EDLines algorithm![](example/out/car_edlines.jpg)
-* house.png Original![](example/house.png)
-* with lsd algorithm![](example/out/house_lsd.png)
-* with EDLines algorithm![](example/out/house_edlines.png)
-* chairs.jpg Original![](example/chairs.jpg)
-* with lsd algorithm![](example/out/chairs_lsd.jpg)
-* with EDLines algorithm
+* car.jpg Original  
+
+  ![](example/car.jpg)
+* with lsd algorithm  
+
+  ![](example/out/car_lsd.jpg)
+* with EDLines algorithm  
+
+  ![](example/out/car_edlines.jpg)
+
+* house.png Original  
+
+  ![](example/house.png)
+* with lsd algorithm  
+
+  ![](example/out/house_lsd.png)
+* with EDLines algorithm  
+
+  ![](example/out/house_edlines.png)
+
+
+* chairs.jpg Original  
+
+  ![](example/chairs.jpg)
+* with lsd algorithm  
+
+  ![](example/out/chairs_lsd.jpg)
+* with EDLines algorithm  
+
   ![](example/out/chairs_edlines.jpg)
 
-### 4. Compile Library from cpp  
+## 4. Compile Library from cpp  
 
-## 4.1 Compile For LSD
+### 4.1 Compile For LSD
 ** Windows **
 
 ```shell
@@ -90,7 +110,7 @@ cmake ..
 cmake --build .
 ```
 
-## 4.2 Compile For EDLines
+### 4.2 Compile For EDLines
 ** Windows **
 
 ```shell
