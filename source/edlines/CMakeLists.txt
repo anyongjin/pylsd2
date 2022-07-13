@@ -11,3 +11,8 @@ SET(LIBRARY_OUTPUT_PATH ./lib)
 add_library(EDLines SHARED
 	./edlines.cpp
 )
+
+set_target_properties(EDLines
+  PROPERTIES
+  CXX_STANDARD 11
+  )

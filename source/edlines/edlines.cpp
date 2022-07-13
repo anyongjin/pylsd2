@@ -2833,7 +2833,7 @@ int _edge_drawing_line_detector(unsigned char *src, int w, int h, float scaleX, 
 {
 	int k;
 	image_int8u_p _src = NULL;
-	EDLineParam lineParam = { gradThres, anchorThres, scanInterval, minLineLen, lineFitErrThres };
+	EDLineParam lineParam = { (float)gradThres, (float)anchorThres, (int)scanInterval, minLineLen, lineFitErrThres };
 	LineDescriptor lineDesc = LineDescriptor(numOfBand, widthOfBand, lineParam);
 	ScaleLineSet   lineVec;
 
