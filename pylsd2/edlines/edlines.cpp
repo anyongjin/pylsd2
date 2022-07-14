@@ -563,7 +563,7 @@ EDLineDetector::EDLineDetector()
 EDLineDetector::EDLineDetector(EDLineParam param)
 {
 	//set parameters for line segment detection
-	gradienThreshold_ = (short)param.gradientThreshold;
+	gradientThreshold_ = (short)param.gradientThreshold;
 	anchorThreshold_ = (unsigned char)param.anchorThreshold;
 	scanIntervals_ = param.scanIntervals;
 	minLineLen_ = param.minLineLen;
@@ -1152,7 +1152,7 @@ int EDLineDetector::EdgeDrawing(image_int8u_p image, EdgeChains &edgeChains, boo
 
 	mcv_add(dyABS_m, dxABS_m, sumDxDy);
 
-	mcv_threshold(gradienThreshold_ + 1, sumDxDy, gImg_);
+	mcv_threshold(gradientThreshold_ + 1, sumDxDy, gImg_);
 
 	mcv_mat_divide(4, gImg_, gImg_);
 	mcv_mat_divide(4, sumDxDy, gImgWO_);
