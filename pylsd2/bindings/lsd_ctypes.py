@@ -54,7 +54,7 @@ lsdlib = load_library({
     'default': ['linux/liblsd.so'],
     'x86': ['win32/x86/lsd.dll', 'win32/x86/liblsd.dll'],
     'x64': ['win32/x64/lsd.dll', 'win32/x64/liblsd.dll'],
-    'darwin': ['darwin/liblsd.dylib']
+    'darwin': ['liblsd.dylib']
 })
 if lsdlib is None:
     raise ImportError('Cannot load dynamic library. Did you compile LSD?')
@@ -63,7 +63,7 @@ edlib = load_library({
     'default': ['linux/libEDLines.so'],
     'x86': ['win32/x86/EDLines.dll'],
     'x64': ['win32/x64/EDLines.dll'],
-    'darwin': []
+    'darwin': ['libEDLines.dylib']
 })
 if edlib is None:
     raise ImportError('Cannot load dynamic library. Did you compile EDLines?')

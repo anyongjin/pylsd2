@@ -368,7 +368,7 @@ private:
 	/*the threshold of pixel gradient magnitude.
 	*Only those pixel whose gradient magnitude are larger than this threshold will be
 	*taken as possible edge points. Default value is 36*/
-	short gradienThreshold_;
+	short gradientThreshold_;
 	/*If the pixel's gradient value is bigger than both of its neighbors by a
 	*certain threshold (ANCHOR_THRESHOLD), the pixel is marked to be an anchor.
 	*Default value is 8*/
@@ -551,7 +551,7 @@ EDLineDetector::EDLineDetector()
 {
 	//set parameters for line segment detection
 
-	gradienThreshold_ = 80; // ***** ORIGINAL WAS 25
+	gradientThreshold_ = 80; // ***** ORIGINAL WAS 25
 	anchorThreshold_ = 2;//8
 	scanIntervals_ = 2;//2
 	minLineLen_ = 15;

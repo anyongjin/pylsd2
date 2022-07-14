@@ -32,12 +32,13 @@ class build_ext(build_ext_orig):
         build_temp = pathlib.Path(self.build_temp)
         build_temp.mkdir(parents=True, exist_ok=True)
         extdir = pathlib.Path(self.get_ext_fullpath(ext.name))
-        extdir.mkdir(parents=True, exist_ok=True)
+        extdir.parent.mkdir(parents=True, exist_ok=True)
 
         # example of cmake args
         config = 'Debug' if self.debug else 'Release'
         cmake_args = [
             '-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=' + str(extdir.parent.absolute()),
+            '-DCMAKE_ARCHIVE_OUTPUT_DIRECTORY=' + str(self.build_temp),
             '-DCMAKE_BUILD_TYPE=' + config
         ]
 
@@ -62,15 +63,13 @@ setup(
     author='Gefu Tang, anyongjin',
     author_email='anyongjin163@163.com',
     license='Various',
-    keywords="LSD",
+    keywords=["LSD", "EDLines", "line segment detection", "computational geometry", "image recognition"],
     url='https://github.com/anyongjin/pylsd2',
     ext_modules=[
         CMakeExtension('pylsd2')],
     cmdclass={
         'build_ext': build_ext
         },
-    packages=['pylsd2', 'pylsd2.bindings', 'pylsd2.lib'],
-    package_dir={'pylsd2.lib': 'pylsd2/lib'},
-    package_data={'pylsd2.lib': [
-        'darwin/*.dylib', 'win32/x86/*.dll', 'win32/x64/*.dll', 'linux/*.so']},
+    packages=['pylsd2', 'pylsd2.bindings'],
+    inclue_package_data=True
 )
