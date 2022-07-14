@@ -61,7 +61,7 @@ setup(
     description='pylsd2 is the python bindings for Line Segment Detection(LSD and EDLines)',
     author='Gefu Tang, anyongjin',
     author_email='anyongjin163@163.com',
-    license='BSD',
+    license='Various',
     keywords="LSD",
     url='https://github.com/anyongjin/pylsd2',
     ext_modules=[
