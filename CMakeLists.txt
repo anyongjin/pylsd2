@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.10.1)
 project(pylsd2)
 
-set(edlines_src_dir "source/edlines")
+set(edlines_src_dir "pylsd2/edlines")
 set(edlines_src "${edlines_src_dir}/edlines.cpp")
 
-set(lsd_dir "source/lsd/")
+set(lsd_dir "pylsd2/lsd/")
 set(lsd_src "${lsd_dir}/src/lsd.cpp")
 
 include_directories(

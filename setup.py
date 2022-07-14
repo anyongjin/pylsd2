@@ -65,8 +65,7 @@ setup(
     keywords="LSD",
     url='https://github.com/anyongjin/pylsd2',
     ext_modules=[
-        CMakeExtension('source/edlines'),
-        CMakeExtension('source/lsd')],
+        CMakeExtension('pylsd2')],
     cmdclass={
         'build_ext': build_ext
         },
