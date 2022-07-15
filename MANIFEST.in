@@ -1,0 +1,4 @@
+include pylsd2/lsd/include/*.h
+include pylsd2/lsd/src/*.cpp
+include pylsd2/*.cpp
+include pylsd2/*.h

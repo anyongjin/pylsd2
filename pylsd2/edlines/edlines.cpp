@@ -66,7 +66,7 @@ using namespace std;
 #endif
 
 #ifndef M_LN10
-#define M_LN10   2.302585093f 
+#define M_LN10   2.302585093f
 #endif
 
 #ifndef log_gamma
@@ -175,7 +175,7 @@ struct LineChains{
 
 typedef  std::list<Pixel> PixelChain;//each edge is a pixel chain
 
- 
+
 struct EDLineParam{
 
 	float gradientThreshold;
@@ -368,7 +368,7 @@ private:
 	/*the threshold of pixel gradient magnitude.
 	*Only those pixel whose gradient magnitude are larger than this threshold will be
 	*taken as possible edge points. Default value is 36*/
-	short gradienThreshold_;
+	short gradientThreshold_;
 	/*If the pixel's gradient value is bigger than both of its neighbors by a
 	*certain threshold (ANCHOR_THRESHOLD), the pixel is marked to be an anchor.
 	*Default value is 8*/
@@ -551,7 +551,7 @@ EDLineDetector::EDLineDetector()
 {
 	//set parameters for line segment detection
 
-	gradienThreshold_ = 80; // ***** ORIGINAL WAS 25
+	gradientThreshold_ = 80; // ***** ORIGINAL WAS 25
 	anchorThreshold_ = 2;//8
 	scanIntervals_ = 2;//2
 	minLineLen_ = 15;
@@ -563,7 +563,7 @@ EDLineDetector::EDLineDetector()
 EDLineDetector::EDLineDetector(EDLineParam param)
 {
 	//set parameters for line segment detection
-	gradienThreshold_ = (short)param.gradientThreshold;
+	gradientThreshold_ = (short)param.gradientThreshold;
 	anchorThreshold_ = (unsigned char)param.anchorThreshold;
 	scanIntervals_ = param.scanIntervals;
 	minLineLen_ = param.minLineLen;
@@ -1152,7 +1152,7 @@ int EDLineDetector::EdgeDrawing(image_int8u_p image, EdgeChains &edgeChains, boo
 
 	mcv_add(dyABS_m, dxABS_m, sumDxDy);
 
-	mcv_threshold(gradienThreshold_ + 1, sumDxDy, gImg_);
+	mcv_threshold(gradientThreshold_ + 1, sumDxDy, gImg_);
 
 	mcv_mat_divide(4, gImg_, gImg_);
 	mcv_mat_divide(4, sumDxDy, gImgWO_);
@@ -1237,7 +1237,7 @@ int EDLineDetector::EdgeDrawing(image_int8u_p image, EdgeChains &edgeChains, boo
 				pFirstPartEdgeX_[offsetPFirst] = x;
 				pFirstPartEdgeY_[offsetPFirst++] = y;
 				shouldGoDirection = 0;//unknown
-				if (pdirImg[indexInArray] == Horizontal){//should go left or right 
+				if (pdirImg[indexInArray] == Horizontal){//should go left or right
 					if (lastDirection == UpDir || lastDirection == DownDir){//change the pixel direction now
 						if (x>lastX){//should go right
 							shouldGoDirection = RightDir;
@@ -2527,8 +2527,8 @@ static image_int8u_p gaussian_sampler_byte_bbox(image_int8u_p in, boundingbox_t 
 	sigma.v = (scale.v < 1.f) ? (sigma_scale * iscale.v) : (sigma_scale);
 
 	//prec = 3.f;
-	_h = (unsigned int)ceil(sigma.v * 3.71692219f);//  sqrt(prec * 4.605170186f)); //log(10)*2  
-	_w = (unsigned int)ceil(sigma.u * 3.71692219f);//  sqrt(prec * 4.605170186f)); //log(10)*2  
+	_h = (unsigned int)ceil(sigma.v * 3.71692219f);//  sqrt(prec * 4.605170186f)); //log(10)*2
+	_w = (unsigned int)ceil(sigma.u * 3.71692219f);//  sqrt(prec * 4.605170186f)); //log(10)*2
 	if (gs_kx > 1) {
 		_w = (unsigned int)ceil((gs_kx - 1) * 0.5);
 	}
@@ -2628,8 +2628,8 @@ static image_int8u_p gaussian_sampler_byte(image_int8u_p in, pixel_float_t scale
 	sigma.v = (scale.v < 1.f) ? (sigma_scale * iscale.v) : (sigma_scale);
 
 	//prec = 3.f;
-	_h = (unsigned int)ceil(sigma.v * 3.71692219f);//  sqrt(prec * 4.605170186f)); //log(10)*2  
-	_w = (unsigned int)ceil(sigma.u * 3.71692219f);//  sqrt(prec * 4.605170186f)); //log(10)*2  
+	_h = (unsigned int)ceil(sigma.v * 3.71692219f);//  sqrt(prec * 4.605170186f)); //log(10)*2
+	_w = (unsigned int)ceil(sigma.u * 3.71692219f);//  sqrt(prec * 4.605170186f)); //log(10)*2
 
 	nx = 1 + 2 * _w; /* kernel size */
 	ny = 1 + 2 * _h; /* kernel size */
@@ -2809,7 +2809,7 @@ int LineDescriptor::Run(float scaleX, float scaleY, boundingbox_t bbox,
 	gs_scale.v = scaleY;
 
 	blur = gaussian_sampler_byte_bbox(image, bbox, gs_scale, sigma_scale, gs_kx, gs_ky);
-	
+
 	if (ScaledKeyLines(blur, keyLines)){
 		delete[]blur->data;
 		delete[]blur;
@@ -2826,14 +2826,14 @@ int LineDescriptor::Run(float scaleX, float scaleY, boundingbox_t bbox,
 	return 0;
 }
 
-int _edge_drawing_line_detector(unsigned char *src, int w, int h, float scaleX, float scaleY, boundingbox_t bbox, 
-	std::vector<line_float_t> &lines, unsigned int numOfBand=9, unsigned int widthOfBand=7, short gradThres = 80, 
-	short anchorThres = 2, short scanInterval = 2, int minLineLen = 15, float lineFitErrThres = 1.4f, 
+int _edge_drawing_line_detector(unsigned char *src, int w, int h, float scaleX, float scaleY, boundingbox_t bbox,
+	std::vector<line_float_t> &lines, unsigned int numOfBand=9, unsigned int widthOfBand=7, short gradThres = 80,
+	short anchorThres = 2, short scanInterval = 2, int minLineLen = 15, float lineFitErrThres = 1.4f,
 	int gs_kx = 0, int gs_ky = 0, float sigma_scale = 0.6f)
 {
 	int k;
 	image_int8u_p _src = NULL;
-	EDLineParam lineParam = { gradThres, anchorThres, scanInterval, minLineLen, lineFitErrThres };
+	EDLineParam lineParam = { (float)gradThres, (float)anchorThres, (int)scanInterval, minLineLen, lineFitErrThres };
 	LineDescriptor lineDesc = LineDescriptor(numOfBand, widthOfBand, lineParam);
 	ScaleLineSet   lineVec;
 
@@ -2864,11 +2864,11 @@ int _edge_drawing_line_detector(unsigned char *src, int w, int h, float scaleX, 
 @param       [in]      bbox:                      boundingbox to detect
 @param       [in/out]  lines:                     result
 @return��										  0:ok; 1:error
-@brief��     
+@brief��
 
 */
-int EdgeDrawingLineDetector(unsigned char *src, int w, int h, float scaleX, float scaleY, boundingbox_t bbox, 
-	std::vector<line_float_t> &lines, short gradThres, short anchorThres, short scanInterval, int minLineLen, 
+int EdgeDrawingLineDetector(unsigned char *src, int w, int h, float scaleX, float scaleY, boundingbox_t bbox,
+	std::vector<line_float_t> &lines, short gradThres, short anchorThres, short scanInterval, int minLineLen,
 	float lineFitErrThres, int gs_kx, int gs_ky, float gs_sigma)
 {
 	if (src == NULL) {
@@ -2888,7 +2888,7 @@ int EdgeDrawingLineDetector(unsigned char *src, int w, int h, float scaleX, floa
 		return 1;
 	}
 
-	return _edge_drawing_line_detector(src, w, h, scaleX, scaleY, bbox, lines, 9, 7, 
+	return _edge_drawing_line_detector(src, w, h, scaleX, scaleY, bbox, lines, 9, 7,
 		gradThres, anchorThres, scanInterval, minLineLen, lineFitErrThres, gs_kx, gs_ky, gs_sigma);
 }
 
@@ -2897,7 +2897,7 @@ double* EdgeDrawingLineDetectorWrapper(int& n_out, unsigned char *src, int w, in
 	float lineFitErrThres, int gs_kx, int gs_ky, float gs_sigma){
 	std::vector<line_float_t> lines;
 	boundingbox_t pageBox = {0, 0, w, h};
-	int error = EdgeDrawingLineDetector(src, w, h, scaleX, scaleY, pageBox, lines, gradThres, 
+	int error = EdgeDrawingLineDetector(src, w, h, scaleX, scaleY, pageBox, lines, gradThres,
 		anchorThres,scanInterval, minLineLen, lineFitErrThres, gs_kx, gs_ky, gs_sigma);
 	if(error > 0){
 		cerr << "EdgeDrawingLineDetector error:" << error << endl;
